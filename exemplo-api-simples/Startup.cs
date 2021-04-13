@@ -20,13 +20,13 @@ namespace TodoApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TodoContext>(opt =>
-                                               opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<TodoContext>(options => options.UseMySQL("server=localhost; port=3306; database=todo-list; Uid=root; Pwd=root;"));
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exemplo", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Todo List", Version = "v1" });
             });
         }
 
@@ -36,7 +36,7 @@ namespace TodoApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Exemplo v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo List v1"));
             }
 
             app.UseHttpsRedirection();
